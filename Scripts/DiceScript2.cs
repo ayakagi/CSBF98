@@ -5,12 +5,14 @@ public class DiceScript2 : MonoBehaviour {
     public static Vector3 diceVelocity;
     DiceCheckZoneScript2 rollingDice2;
     Player PlayerDice2;
+    CamEvent camEv;
 
     // Use this for initialization
     void Start () {
 		rb = GetComponent<Rigidbody> ();
         rollingDice2 = GameObject.FindObjectOfType<DiceCheckZoneScript2>();
         PlayerDice2 = GameObject.FindObjectOfType<Player>();
+        camEv = GameObject.FindObjectOfType<CamEvent>();
     }
 
     // Update is called once per frame
@@ -27,7 +29,8 @@ public class DiceScript2 : MonoBehaviour {
 		transform.rotation = Quaternion.identity;
 		rb.AddForce (transform.up * 500);
 		rb.AddTorque (dirX, dirY, dirZ);
-	}
+        camEv.camDice();
+    }
 
     public void OnClick2()
     {

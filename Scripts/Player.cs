@@ -3,15 +3,18 @@
 public class Player : MonoBehaviour
 {
     public Tile StartPosition;
+    public Tile jail;
+    public Tile goToJail;
+    public Tile incomeTax;
+    public Tile superTax;
     public bool isDoneRolling1;
     public bool isDoneRolling2;
-    public bool canReroll;
+    public bool inJail;
     private int totalMove;
-    private int moveTimeCount;
-    
+    public int salary;
     Tile CurrentPosition;
     Tile FinalPosition;
-    DiceNumberTextScript player_dice;     
+    DiceNumberTextScript player_dice;
 
     // Use this for initialization
     void Start()
@@ -20,14 +23,15 @@ public class Player : MonoBehaviour
         CurrentPosition = StartPosition;
         isDoneRolling1 = false;
         isDoneRolling2 = false;
+        salary = 1500;
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void Update()
     {
-        if (player_dice.GetDiceTotal() != 0)
-            PlayerMovement();
+
     }
+
 
     public void PlayerMovement()
     {
@@ -41,15 +45,62 @@ public class Player : MonoBehaviour
                 for (int m = 0; m < totalMove; m++)
                 {
                     FinalPosition = FinalPosition.GoNextTile[0];
+                    // collect salary
+                    if (FinalPosition == StartPosition)
+                    {
+                        salary += 200;
+                    }
                 }
                 // teleport the token
                 this.transform.position = FinalPosition.transform.position;
                 CurrentPosition = FinalPosition;
-                // finished moving token, change the boolean for next rolling
-                isDoneRolling1 = false;
-                isDoneRolling2 = false;
             }
         }
-        
+
     }
+
+    public void TeleportToJail()
+    {
+
+        if (isDoneRolling1 == true && isDoneRolling2 == true)
+        {
+            if (this.transform.position == goToJail.transform.position)
+            {
+                this.transform.position = jail.transform.position;
+                CurrentPosition = jail;
+                inJail = true;
+            }
+
+        }
+    }
+
+    public void IncomeTax()
+    {
+        if (isDoneRolling1 == true && isDoneRolling2 == true)
+        {
+            if (this.transform.position == incomeTax.transform.position)
+            {
+                salary -= 200;
+
+            }
+        }
+    }
+
+    public void SuperTax()
+    {
+        if (isDoneRolling1 == false && isDoneRolling2 == false)
+        {
+            if (this.transform.position == superTax.transform.position)
+            {
+                salary -= 100;
+
+            }
+        }
+    }
+
+    public int GetSalary()
+    {
+        return salary;
+    }
+
 }
