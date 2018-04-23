@@ -1,33 +1,33 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class DiceNumberTextScript : MonoBehaviour
-{
-    public static int diceNumber1;
+public class DiceNumberTextScript : MonoBehaviour {
+
+	Text text;
+	public static int diceNumber1;
     public static int diceNumber2;
-    public int diceTotal;
-    Text diceValueDisplay;
-    DiceCheckZoneScript1 diceCheck1;
-    DiceCheckZoneScript2 diceCheck2;
+    public int diceTotal = 0;
+    public bool isStopped = false;
+    DiceCheckZoneScript1 checkRolled1;
+    DiceCheckZoneScript2 checkRolled2;
 
-    // Use this for initialization
-    void Start()
-    {
-        diceValueDisplay = GetComponent<Text>();
-        diceCheck1 = GameObject.FindObjectOfType<DiceCheckZoneScript1>();
-        diceCheck2 = GameObject.FindObjectOfType<DiceCheckZoneScript2>();
-        diceTotal = 0;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (diceCheck1.diceOnBoard1 == true && diceCheck1.startRolling1 == true &&
-            diceCheck2.diceOnBoard2 == true && diceCheck2.startRolling2 == true)
+	// Use this for initialization
+	void Start () {
+		text = GetComponent<Text> ();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        if (isStopped == false && checkRolled1.GetDiceRolled1() == false && checkRolled2.GetDiceRolled2() == false)
         {
             diceTotal = 0;
             diceTotal = diceNumber1 + diceNumber2;
-            diceValueDisplay.text = diceTotal.ToString();
+            text.text = diceTotal.ToString();
+            DiceRolled();
+            checkRolled1.SetNotClickedRoll1();
+            checkRolled2.SetNotClickedRoll2();
         }
     }
 
@@ -46,4 +46,13 @@ public class DiceNumberTextScript : MonoBehaviour
         return diceTotal;
     }
 
+    public void DiceRolled()
+    {
+        isStopped = true;
+    }
+
+    public void DiceReadyToBeRolled()
+    {
+        isStopped = false;
+    }
 }

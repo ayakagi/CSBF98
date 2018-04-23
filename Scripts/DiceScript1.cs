@@ -1,17 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class DiceScript1 : MonoBehaviour {
-    static Rigidbody rb;
-    public static Vector3 diceVelocity;
-    DiceCheckZoneScript1 rollingDice1;
-    Player PlayerDice1;
 
-    // Use this for initialization
-    void Start () {
+	static Rigidbody rb;
+	public static Vector3 diceVelocity;
+
+	// Use this for initialization
+	void Start () {
 		rb = GetComponent<Rigidbody> ();
-        rollingDice1 = GameObject.FindObjectOfType<DiceCheckZoneScript1>();
-        PlayerDice1 = GameObject.FindObjectOfType<Player>();
-    }
+	}
 
     // Update is called once per frame
     void Update() {
@@ -28,11 +27,5 @@ public class DiceScript1 : MonoBehaviour {
 		rb.AddForce (transform.up * 500);
 		rb.AddTorque (dirX, dirY, dirZ);
 	}
-
-    public void OnClick1()
-    {
-        rollingDice1.startRolling1 = true; 
-        PlayerDice1.isDoneRolling1 = true;
-    }
 }
 

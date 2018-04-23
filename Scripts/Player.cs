@@ -1,55 +1,46 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Player : MonoBehaviour
-{
+public class Player : MonoBehaviour {
+    //public int rollCount;
     public Tile StartPosition;
-    public bool isDoneRolling1;
-    public bool isDoneRolling2;
-    public bool canReroll;
-    private int totalMove;
-    private int moveTimeCount;
-    
     Tile CurrentPosition;
     Tile FinalPosition;
-    DiceNumberTextScript player_dice;     
+    DiceNumberTextScript dice;
 
-    // Use this for initialization
-    void Start()
-    {
-        player_dice = GameObject.FindObjectOfType<DiceNumberTextScript>();
+	// Use this for initialization
+	void Start () {
+        dice = GameObject.FindObjectOfType<DiceNumberTextScript>();
         CurrentPosition = StartPosition;
-        isDoneRolling1 = false;
-        isDoneRolling2 = false;
-    }
-
-    // Update is called once per frame
-    void LateUpdate()
-    {
-        if (player_dice.GetDiceTotal() != 0)
-            PlayerMovement();
-    }
-
-    public void PlayerMovement()
-    {
-        if (isDoneRolling1 == true && isDoneRolling2 == true)
+        //rollCount = 0;
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        if (dice.isStopped == true)
         {
-            totalMove = player_dice.GetDiceTotal();
-            if (totalMove != 0)
-            {
-                FinalPosition = CurrentPosition;
-                // move token
-                for (int m = 0; m < totalMove; m++)
-                {
-                    FinalPosition = FinalPosition.GoNextTile[0];
-                }
-                // teleport the token
-                this.transform.position = FinalPosition.transform.position;
-                CurrentPosition = FinalPosition;
-                // finished moving token, change the boolean for next rolling
-                isDoneRolling1 = false;
-                isDoneRolling2 = false;
-            }
+            PlayerMovement();
         }
-        
+
+    }
+    
+    void PlayerMovement()
+    {
+        //do
+        //{
+            int move = dice.GetDiceTotal();
+            FinalPosition = CurrentPosition;
+            for (int m = 0; m < move; m++)
+            {
+                FinalPosition = FinalPosition.GoNextTile[0];
+            }
+            //rollCount++;
+        //}
+        //while (dice.getDice1() == dice.getDice2() && rollCount < 3);
+        //rollCount = 0;
+        this.transform.position = FinalPosition.transform.position;
+
+        CurrentPosition = FinalPosition;
     }
 }
