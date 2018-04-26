@@ -1,30 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+// Class for Camera Setting
 public class CamEvent : MonoBehaviour {
-
     public Camera[] cams;
 
-    public void camMain()
+    // Showing the game board
+    public void CamMain()
     {
         cams[0].enabled = true;
         cams[1].enabled = false;
+        cams[2].enabled = false;
     }
 
-    public void camDice()
+    // Zooming in to dice rolling animation
+    public void CamDice()
     {
         cams[0].enabled = false;
         cams[1].enabled = true;
+        cams[2].enabled = false;
     }
-    /*
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}*/
+
+    // Zooming in to token moving animation
+    public void CamToken()
+    {
+        cams[0].enabled = false;
+        cams[1].enabled = false;
+        cams[2].enabled = true;
+    }
 }

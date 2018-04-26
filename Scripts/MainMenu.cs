@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Class for running the whole game (Property Tycoon)
 public class MainMenu : MonoBehaviour {
 
 	public void PlayGame()

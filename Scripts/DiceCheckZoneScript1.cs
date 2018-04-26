@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
+// Class for checking and updating the value of dice1
 public class DiceCheckZoneScript1 : MonoBehaviour
 {
-	Vector3 diceVelocity;
     public Sprite[] DiceImage1;
-    public bool startRolling1;  
-    public bool diceOnBoard1;
+    public bool startRolling1;          // dice1 is rolled once?
+    public bool diceOnBoard1;           // dice1 is being rolled or landing on board?
 
+    Vector3 diceVelocity;
+    
     private void Start()
     {
-        startRolling1 = false;
-        diceOnBoard1 = false;
+        startRolling1 = false;          // no one should have rolled dice1 before the game starts
     }
 
     // Update is called once per frame
@@ -21,9 +21,12 @@ public class DiceCheckZoneScript1 : MonoBehaviour
 		diceVelocity = DiceScript1.diceVelocity;
 	}
 
+    // Check the side and update the value of dice1
+    // Dice1 has value only if someone rolls it
+    // Value of dice1 will only be checked and updated when it perfectly lands on the board
 	void OnTriggerStay(Collider col)
 	{
-        diceOnBoard1 = false;
+        diceOnBoard1 = false;       // the dice1 should be on air when it is being rolled
         if (startRolling1 == true)
         {
             if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
@@ -55,10 +58,8 @@ public class DiceCheckZoneScript1 : MonoBehaviour
                         GameObject.Find("DiceIcon1").GetComponent<Image>().sprite = DiceImage1[0];
                         break;
                 }
-                diceOnBoard1 = true;
-                
+                diceOnBoard1 = true;        // confirm dice1 is on board after rolling
             }
-        }
-        
+        }      
 	}
 }
